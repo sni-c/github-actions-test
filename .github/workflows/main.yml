@@ -1,5 +1,3 @@
-# referenced Florian's implementation
-
 name: Scrape OpenSea collection data  
 
 on:
@@ -12,6 +10,8 @@ jobs:
   scheduled:
     runs-on: ubuntu-latest
     steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
     - name: Fetch OpenSea data 
       run: |-
         # curl https://api.opensea.io/api/v1/collection/doodles-official/stats | jq . > opensea.json
