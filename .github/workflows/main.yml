@@ -1,0 +1,28 @@
+# referenced Florian's implementation
+
+name: Scrape OpenSea collection data  
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron:  '0-59 * * * *'
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Fetch OpenSea data 
+      run: |-
+        # curl https://api.opensea.io/api/v1/collection/doodles-official/stats | jq . > opensea.json
+        curl -X 'GET' 'https://api.opensea.io/api/v1/collection/doodles-official/stats' \
+        -H 'accept: application/json' \
+         jq . > $(date +"%y%m%d%H")_doodles-official.json
+    - name: Push to repo
+      run: |-
+        git config user.name "Automated"
+        git config user.email "actions@users.noreply.github.com"
+        git add -A
+        timestamp=$(date -u)
+        git commit -m "Latest data: ${timestamp}" || exit 0
+        git push
