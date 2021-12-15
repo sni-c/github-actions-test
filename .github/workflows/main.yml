@@ -17,11 +17,9 @@ jobs:
       id: version
       with:
         cmd: 'jq .version package.json -r'
-    - name: Fetch OpenSea data 
+    - name: Fetch OpenSea data and Push to Repo
       run: |-
-        # curl https://api.opensea.io/api/v1/collection/doodles-official/stats | jq . > opensea.json
-    - name: Push to repo
-      run: |-
+        curl https://api.opensea.io/api/v1/collection/doodles-official/stats | jq . > opensea.json
         git config user.name "Automated"
         git config user.email "actions@users.noreply.github.com"
         git add -A
