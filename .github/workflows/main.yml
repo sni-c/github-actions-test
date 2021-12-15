@@ -20,9 +20,6 @@ jobs:
     - name: Fetch OpenSea data 
       run: |-
         # curl https://api.opensea.io/api/v1/collection/doodles-official/stats | jq . > opensea.json
-        curl -X 'GET' 'https://api.opensea.io/api/v1/collection/doodles-official/stats' \
-        -H 'accept: application/json' \
-         jq . > $(date +"%y%m%d%H")_doodles-official.json
     - name: Push to repo
       run: |-
         git config user.name "Automated"
